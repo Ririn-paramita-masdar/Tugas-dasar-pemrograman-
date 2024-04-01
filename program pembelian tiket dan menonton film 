@@ -1,0 +1,77 @@
+# Dictionary berisi daftar genre film beserta film-filmnya dan harga tiket
+daftar_film = {
+    "Action": {"Cepat dan Marah 9": 10, "Mortal Kombat": 12},
+    "Horor": {"Kakek cangkul": 8, "Vina": 9, "Kuntilanak": 7, "Nenek gayung": 8, "Pocong": 8},
+    "Romance": {"Love in Paris": 9, "A Promise": 10},
+    "Comedy": {"Crazy Rich Asians": 11, "Deadpool": 12},
+    "Sci-Fi": {"Star Wars": 12, "The Matrix": 11}
+}
+
+# Fungsi untuk menampilkan daftar genre
+def tampilkan_daftar_genre():
+    print("Daftar Genre:")
+    for genre in daftar_film.keys():
+        print("-", genre)
+
+# Fungsi untuk menampilkan daftar film dalam suatu genre beserta harga dan waktu tayangnya
+def tampilkan_daftar_film(genre):
+    print(f"Daftar Film dalam genre {genre}:")
+    for nomor, (film, harga) in enumerate(daftar_film[genre].items(), start=1):
+        print(f"{nomor}. {film} - Harga: {harga} IDR")
+
+# Fungsi untuk menghitung harga total berdasarkan genre, film, dan jumlah tiket
+def hitung_harga_total(genre, film, jumlah_tiket, hari):
+    harga_per_tiket = 0
+    if hari == "Minggu":
+        harga_per_tiket = 50
+    elif hari == "Sabtu":
+        harga_per_tiket = 35
+    else:
+        harga_per_tiket = 40
+    
+    harga_film = daftar_film[genre][film]
+    harga_total = harga_film * jumlah_tiket + harga_per_tiket * jumlah_tiket
+    return harga_total
+
+# Alur utama program
+nama = input("Input : Masukkan Nama: ")
+if not nama:
+    exit()
+
+usia = input("Input : Masukkan Usia: ")
+if not usia:
+    exit()
+
+tampilkan_daftar_genre()
+genre = input("Pilih Genre: ")
+if genre not in daftar_film.keys():
+    print("Genre tidak valid.")
+    exit()
+
+tampilkan_daftar_film(genre)
+nomor_film = int(input("Pilih Nomor Film: "))
+film = list(daftar_film[genre].keys())[nomor_film - 1]
+
+hari = input("Input : Masukkan Hari (Sabtu/Minggu/Lainnya): ").capitalize()
+if hari not in ["Sabtu", "Minggu", "Lainnya"]:
+    print("Hari tidak valid.")
+    exit()
+
+jumlah_tiket = int(input("Input : Jumlah Tiket yang ingin dibeli: "))
+
+harga_total = hitung_harga_total(genre, film, jumlah_tiket, hari)
+
+print("\nTampilkan Detail:")
+print("1). Nama:", nama)
+print("2). Umur:", usia, "tahun")
+print("3). Genre:", genre)
+print("4). Film:", film)
+print("5). Jumlah Tiket:", jumlah_tiket)
+print("6). Harga:", harga_total, "IDR")
+
+konfirmasi = input("Apakah Anda ingin membeli tiket? (y/n): ")
+if konfirmasi.lower() == 'y':
+    print("Pembelian berhasil.")
+else:
+    print("Pembelian dibatalkan.")
+    
